@@ -26,6 +26,7 @@ RUN curl -O https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_
 # Set environment variables for Spark and Python paths
 ENV SPARK_HOME /opt/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}
 ENV PYTHONPATH ${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9-src.zip
+ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 
 # Install Python dependencies
 RUN pip install pyspark
@@ -33,10 +34,12 @@ RUN pip install pyspark
 # Install AWS CLI version 2
 RUN curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
-    ./aws/install \
+    ./aws/install && \
+    rm awscliv2.zip && \
+    rm -rf ./aws
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /
 
 # Start a shell by default
-CMD ["bash"]
+CMD ["/bin/bash"]
