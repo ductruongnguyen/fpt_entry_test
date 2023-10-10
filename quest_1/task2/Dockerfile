@@ -26,7 +26,7 @@ RUN curl -O https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_
 # Set environment variables for Spark and Python paths
 ENV SPARK_HOME /opt/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}
 ENV PYTHONPATH ${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-0.10.9-src.zip
-ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+ENV PATH ${PATH}:${SPARK_HOME}/bin:${SPARK_HOME}/sbin
 
 # Install Python dependencies
 RUN pip install pyspark
